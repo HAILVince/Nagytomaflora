@@ -49,7 +49,8 @@ While they are all `null`, the page says the details are still a secret.
 
 Drop the file into `assets/photos/` and add one entry to `photos` (file name, pixel
 size, group, Hungarian/English alt text and caption). Groups: `candle`, `sun`,
-`water`, `lens`, `faces`.
+`water`, `lens`, `faces`, `together`, `outdoor`, `everyday`. The "All" view mixes the
+groups, so you do not need to keep the list in any particular order.
 
 ## Testing locally
 

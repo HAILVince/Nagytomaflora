@@ -626,9 +626,22 @@
     });
   }
 
+  // "All" view: take one photo from each group in turn so the page stays varied.
+  function mixedPhotos() {
+    var order = [], byGroup = {}, out = [];
+    CFG.photos.forEach(function (p) {
+      if (!byGroup[p.group]) { byGroup[p.group] = []; order.push(p.group); }
+      byGroup[p.group].push(p);
+    });
+    for (var i = 0; out.length < CFG.photos.length; i++) {
+      order.forEach(function (g) { if (byGroup[g][i]) out.push(byGroup[g][i]); });
+    }
+    return out;
+  }
+
   function renderShots() {
     var box = $('#shots');
-    shown = CFG.photos.filter(function (p) { return galleryFilter === 'all' || p.group === galleryFilter; });
+    shown = galleryFilter === 'all' ? mixedPhotos() : CFG.photos.filter(function (p) { return p.group === galleryFilter; });
     box.innerHTML = '';
     shown.forEach(function (p, i) {
       var fig = document.createElement('figure');

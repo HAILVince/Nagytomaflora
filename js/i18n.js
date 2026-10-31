@@ -103,8 +103,8 @@ window.FLORA_I18N = {
     },
     gallery: {
       title: 'Pillanatok',
-      lede: 'Gyertyafény, napsütés, tengervíz és egy kamera. Kattints egy képre, hogy nagyban lásd.',
-      filters: { all: 'Mind', candle: 'Gyertyafény', sun: 'Napfény', water: 'Víz', lens: 'Kamera', faces: 'Arcok' },
+      lede: 'Gyertyafény, napsütés, tengervíz, mászófal, vonatablak és egy kamera. Kattints egy képre, hogy nagyban lásd.',
+      filters: { all: 'Mind', candle: 'Gyertyafény', sun: 'Napfény', water: 'Víz', lens: 'Kamera', faces: 'Arcok', together: 'Együtt', outdoor: 'Szabadban', everyday: 'Hétköznapok' },
       filterLabel: 'Képek szűrése',
       open: 'Kép megnyitása: {cap}',
       counter: '{n} / {t}'
@@ -233,8 +233,8 @@ window.FLORA_I18N = {
     },
     gallery: {
       title: 'Moments',
-      lede: 'Candlelight, sunshine, sea water and a camera. Click any photo to see it bigger.',
-      filters: { all: 'All', candle: 'Candlelight', sun: 'Sunshine', water: 'Water', lens: 'Camera', faces: 'Faces' },
+      lede: 'Candlelight, sunshine, sea water, a climbing wall, train windows and a camera. Click any photo to see it bigger.',
+      filters: { all: 'All', candle: 'Candlelight', sun: 'Sunshine', water: 'Water', lens: 'Camera', faces: 'Faces', together: 'Together', outdoor: 'Outdoors', everyday: 'Everyday' },
       filterLabel: 'Filter photos',
       open: 'Open photo: {cap}',
       counter: '{n} / {t}'

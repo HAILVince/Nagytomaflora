@@ -45,7 +45,8 @@ window.FLORA_CONFIG = {
   },
 
   /* --------------------------------------------------------------- 3. PHOTOS
-   * group: candle | sun | water | lens | faces   (matches the filter buttons)
+   * group: candle | sun | water | lens | faces | together | outdoor | everyday
+   *        (matches the filter buttons; "All" mixes the groups)
    * w / h: pixel size of the file, so the page does not jump while loading.
    */
   photos: [
@@ -112,6 +113,61 @@ window.FLORA_CONFIG = {
       cap: { hu: 'Egy póz, ahogy csak te tudod.', en: 'A pose only you can pull off.' } },
     { src: 'assets/photos/pose-2.webp', w: 1920, h: 1080, group: 'faces',
       alt: { hu: 'Flóra két békejelet tart a szeme elé.', en: 'Flóra holding two peace signs up to her eyes.' },
-      cap: { hu: 'Mindent látok.', en: 'I see everything.' } }
+      cap: { hu: 'Mindent látok.', en: 'I see everything.' } },
+
+    { src: 'assets/photos/together-1.webp', w: 959, h: 1600, group: 'together',
+      alt: { hu: 'Három gyerek összebújik, és egy narancssárga cicát simogat.', en: 'Three children huddled together, petting an orange cat.' },
+      cap: { hu: 'Régi kép: összebújva egy cicával.', en: 'An old photo: huddled up with a cat.' } },
+    { src: 'assets/photos/together-2.webp', w: 1080, h: 492, group: 'together',
+      alt: { hu: 'Három ember sisakban és védőszemüvegben, fekete-piros overallban.', en: 'Three people in helmets, goggles and black-and-red suits.' },
+      cap: { hu: 'Sisak fel, szemüveg le, indulás!', en: 'Helmets on, goggles down, let’s go!' } },
+    { src: 'assets/photos/together-3.webp', w: 1080, h: 1440, group: 'together',
+      alt: { hu: 'Flóra mosolyogva ül egy tavi stégen egy hunyorító társa mellett.', en: 'Flóra smiling on a lake jetty next to someone winking at the camera.' },
+      cap: { hu: 'Stégen, nyári fényben.', en: 'On the jetty, in summer light.' } },
+    { src: 'assets/photos/together-4.webp', w: 1200, h: 1600, group: 'together',
+      alt: { hu: 'Flóra mosolyog az autóban, mellette valaki durcás arcot vág a vállára dőlve.', en: 'Flóra smiling in a car while someone pouts, head resting on her shoulder.' },
+      cap: { hu: 'Útitárs a válladon.', en: 'A travel buddy on your shoulder.' } },
+    { src: 'assets/photos/together-5.webp', w: 807, h: 1600, group: 'together',
+      alt: { hu: 'Elmosódott közeli kép egy videóhívásról, pillangós szűrővel.', en: 'A blurry close-up from a video call, with a butterfly filter.' },
+      cap: { hu: 'Videóhívás pillangókkal.', en: 'A video call with butterflies.' } },
+    { src: 'assets/photos/out-1.webp', w: 1200, h: 1600, group: 'outdoor',
+      alt: { hu: 'Flóra mezítláb ül egy mászófal tetején a kék ég előtt.', en: 'Flóra sitting barefoot on top of a climbing wall against a blue sky.' },
+      cap: { hu: 'Fent, a mászófogások fölött.', en: 'Up top, above the climbing holds.' } },
+    { src: 'assets/photos/out-2.webp', w: 1200, h: 1600, group: 'outdoor',
+      alt: { hu: 'Flóra mosolyogva fordul hátra a napsütésben, egy mászófalon ül.', en: 'Flóra turning back with a smile in the sunshine, sitting on a climbing wall.' },
+      cap: { hu: 'Napfény a fák között.', en: 'Sunlight through the trees.' } },
+    { src: 'assets/photos/out-3.webp', w: 1200, h: 1600, group: 'outdoor',
+      alt: { hu: 'Flóra összetett kézzel, mosolyogva áll egy parkban, egy nagy fekete karika előtt.', en: 'Flóra smiling with her hands pressed together in a park, in front of a large black hoop.' },
+      cap: { hu: 'Egyensúly, béke és egy nagy karika.', en: 'Balance, peace and a very large hoop.' } },
+    { src: 'assets/photos/out-4.webp', w: 1200, h: 1600, group: 'outdoor',
+      alt: { hu: 'Flóra hosszú, zöld mintás ruhában áll egy ruhapiacon, napfényben.', en: 'Flóra in a long green patterned dress at a clothes market in the sun.' },
+      cap: { hu: 'A piac legszebb ruhája.', en: 'The best dress at the market.' } },
+    { src: 'assets/photos/day-1.webp', w: 736, h: 1478, group: 'everyday',
+      alt: { hu: 'Flóra egy ágyon fekszik, párnát ölel, a szekrény előtt egy rajzolt kis lény látszik.', en: 'Flóra lying on a bed hugging a pillow, with a small cartoon creature by the wardrobe.' },
+      cap: { hu: 'Pihenő, váratlan vendéggel.', en: 'A rest, with an unexpected visitor.' } },
+    { src: 'assets/photos/day-2.webp', w: 1200, h: 1600, group: 'everyday',
+      alt: { hu: 'Flóra nevetve ül egy függöny mellett, rózsaszín pulóverben.', en: 'Flóra laughing beside a curtain in a pink sweater.' },
+      cap: { hu: 'Nevetés, ahogy jön.', en: 'Laughter, just as it comes.' } },
+    { src: 'assets/photos/day-3.webp', w: 1200, h: 1600, group: 'everyday',
+      alt: { hu: 'Flóra az állát a kezén pihentetve mosolyog egy étteremben, előtte két papírpohár.', en: 'Flóra resting her chin on her hands in a café, two paper cups in front of her.' },
+      cap: { hu: 'Hej! Egy kis szünet.', en: 'Hej! A little break.' } },
+    { src: 'assets/photos/day-4.webp', w: 1200, h: 1600, group: 'everyday',
+      alt: { hu: 'Flóra hátizsákkal, hátrafordulva, nyelvet öltve egy bevásárlóközpontban.', en: 'Flóra with a backpack, turning back and sticking her tongue out in a shopping centre.' },
+      cap: { hu: 'Hátizsákkal, mindig úton.', en: 'Backpack on, always on the move.' } },
+    { src: 'assets/photos/day-5.webp', w: 1200, h: 1600, group: 'everyday',
+      alt: { hu: 'Flóra a vonatablaknak dől, kint elmosódott zöld táj suhan el.', en: 'Flóra leaning on a train window while a blurred green landscape rushes by.' },
+      cap: { hu: 'Zöld táj, vonatablak, mosoly.', en: 'Green landscape, train window, smile.' } },
+    { src: 'assets/photos/day-6.webp', w: 1200, h: 1600, group: 'everyday',
+      alt: { hu: 'Flóra fülhallgatóval ül a vonaton, a telefonját nézi.', en: 'Flóra on a train with earphones in, looking at her phone.' },
+      cap: { hu: 'Fülesben, úton.', en: 'Earbuds in, on the way.' } },
+    { src: 'assets/photos/day-7.webp', w: 1200, h: 1600, group: 'everyday',
+      alt: { hu: 'Flóra lehunyt szemmel mosolyog egy vízparti étteremben, kezében egy darab kenyérrel.', en: 'Flóra smiling with closed eyes at a waterside restaurant, a piece of bread in her hand.' },
+      cap: { hu: 'Ez a falat nagyon ízlik.', en: 'This bite is delicious.' } },
+    { src: 'assets/photos/faces-1.webp', w: 738, h: 1600, group: 'faces',
+      alt: { hu: 'Közeli szelfi Flóráról fehér ingben, finom mosollyal.', en: 'Close-up selfie of Flóra in a white shirt with a gentle smile.' },
+      cap: { hu: 'Csendes mosoly, nyugodt tekintet.', en: 'A quiet smile, a calm gaze.' } },
+    { src: 'assets/photos/faces-2.webp', w: 900, h: 1600, group: 'faces',
+      alt: { hu: 'Közeli szelfi Flóráról kócos hajjal, higgadt arckifejezéssel.', en: 'Close-up selfie of Flóra with tousled hair and a calm, deadpan face.' },
+      cap: { hu: 'Kócos haj, teljes méltóság.', en: 'Messy hair, total dignity.' } }
   ]
 };
