@@ -686,9 +686,8 @@
     shown.forEach(function (p, i) {
       var fig = document.createElement('figure');
       fig.className = 'shot';
-      fig.innerHTML = '<button class="shot__btn" type="button" aria-label="' + esc(t('gallery.open', { cap: p.cap })) + '">' +
-        '<img src="' + esc(p.src) + '" width="' + p.w + '" height="' + p.h + '" alt="' + esc(p.alt) + '" loading="lazy" decoding="async"></button>' +
-        '<figcaption>' + esc(p.cap) + '</figcaption>';
+      fig.innerHTML = '<button class="shot__btn" type="button">' +
+        '<img src="' + esc(p.src) + '" width="' + p.w + '" height="' + p.h + '" alt="' + esc(p.alt) + '" loading="lazy" decoding="async"></button>';
       $('.shot__btn', fig).addEventListener('click', function () { openLightbox(i); });
       box.appendChild(fig);
     });
@@ -701,7 +700,6 @@
     var p = shown[lbIndex];
     var img = $('#lbImg');
     img.src = p.src; img.alt = p.alt;
-    $('#lbCap').textContent = p.cap;
     $('#lbCount').textContent = t('gallery.counter', { n: lbIndex + 1, t: shown.length });
     var nxt = shown[(lbIndex + 1) % shown.length]; if (nxt) new Image().src = nxt.src;
   }

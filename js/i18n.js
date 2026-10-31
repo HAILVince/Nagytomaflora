@@ -106,7 +106,6 @@ window.FLORA_I18N = {
     lede: 'Gyertyafény, napsütés, tengervíz, mászófal, vonatablak és egy kamera. Kattints egy képre, hogy nagyban lásd.',
     filters: { all: 'Mind', candle: 'Gyertyafény', sun: 'Napfény', water: 'Víz', lens: 'Kamera', faces: 'Arcok', together: 'Együtt', outdoor: 'Szabadban', everyday: 'Hétköznapok' },
     filterLabel: 'Képek szűrése',
-    open: 'Kép megnyitása: {cap}',
     counter: '{n} / {t}'
   },
   wish: {

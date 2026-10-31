@@ -56,7 +56,7 @@ Covers live in `assets/covers/`. For a step without a cover use `cover: 'art:rec
 ### 2. Photos
 
 Drop the file into `assets/photos/` and add one entry to `photos` (file name, pixel
-size, group, alt text and caption, all in Hungarian). Groups: `candle`, `sun`,
+size, group and a short alt text in Hungarian). Groups: `candle`, `sun`,
 `water`, `lens`, `faces`, `together`, `outdoor`, `everyday`. The "All" view mixes the
 groups, so you do not need to keep the list in any particular order.
 
