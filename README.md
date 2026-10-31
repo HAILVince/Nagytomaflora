@@ -6,8 +6,8 @@ Plain HTML, CSS and JavaScript. No build step, no dependencies.
 She has to continue five song lines to light the candle and get in, and every right
 answer reveals the album cover. After that:
 a tarot-style spread of the things she loves, a mushroom hunt, her moon on the day
-she was born, a photo gallery, the party details and a candle to blow out.
-Hungarian by default, with an EN/HU switch in the corner.
+she was born, a photo gallery and a candle to blow out.
+The whole site is in Hungarian.
 
 ## Hosting on Cloudflare Pages
 
@@ -53,15 +53,10 @@ node tools/make-gate.cjs --try "the real answer" "what she might type"
 Covers live in `assets/covers/`. For a step without a cover use `cover: 'art:record'`
 (a music note) or `cover: 'art:birthday'` (a candle and a 21), both drawn in code.
 
-### 2. The party details
-
-Fill in `party.when`, `party.where`, `party.note` and optionally `party.mapUrl`.
-While they are all `null`, the page says the details are still a secret.
-
-### 3. Photos
+### 2. Photos
 
 Drop the file into `assets/photos/` and add one entry to `photos` (file name, pixel
-size, group, Hungarian/English alt text and caption). Groups: `candle`, `sun`,
+size, group, alt text and caption, all in Hungarian). Groups: `candle`, `sun`,
 `water`, `lens`, `faces`, `together`, `outdoor`, `everyday`. The "All" view mixes the
 groups, so you do not need to keep the list in any particular order.
 
@@ -80,9 +75,9 @@ link at the bottom of the page.
 ```
 index.html        page structure and shared SVG art
 css/style.css     all styling (fonts are self-hosted from assets/fonts)
-js/config.js      gate steps, party details, photo list
-js/i18n.js        every visible text, Hungarian and English
+js/config.js      gate steps, photo list
+js/i18n.js        every visible text
 js/gate-core.js   forgiving answer matching (hashes only) for the gate
 js/app.js         behaviour
-tools/make-gate.cjs  turns lyrics into hashes
+tools/make-gate.cjs  turns answers into hashes
 ```

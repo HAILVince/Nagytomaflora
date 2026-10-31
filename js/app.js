@@ -34,11 +34,8 @@
   }
 
   /* --------------------------------------------------------------- i18n */
-  var lang = store.get('flora-lang');
-  if (!I18N[lang]) lang = 'hu';
-
   function dig(path) {
-    return path.split('.').reduce(function (o, k) { return o == null ? o : o[k]; }, I18N[lang]);
+    return path.split('.').reduce(function (o, k) { return o == null ? o : o[k]; }, I18N);
   }
   function fmt(s, vars) {
     return s.replace(/\{(\w+)\}/g, function (m, k) { return vars && k in vars ? vars[k] : m; });
@@ -47,8 +44,7 @@
     var v = dig(path);
     return typeof v === 'string' ? fmt(v, vars) : v;
   }
-  function loc(obj) { return obj ? (obj[lang] || obj.hu || '') : ''; }
-  function nf(n) { return new Intl.NumberFormat(lang === 'hu' ? 'hu-HU' : 'en-GB').format(n); }
+  function nf(n) { return new Intl.NumberFormat('hu-HU').format(n); }
 
   function ageInfo(now) {
     var b = CFG.birth;
@@ -59,28 +55,15 @@
     // Within four months of the birthday we greet her with the age she is turning.
     return { age: age, shown: daysToNext <= 120 ? age + 1 : age };
   }
-  function ordinal(n) {
-    if (lang === 'hu') return n + '.';
-    var s = ['th', 'st', 'nd', 'rd'], v = n % 100;
-    return n + (s[(v - 20) % 10] || s[v] || s[0]);
-  }
-
   function applyStatic() {
-    document.documentElement.lang = lang;
     document.title = t('meta.title');
     $('meta[name="description"]').setAttribute('content', t('meta.desc'));
 
     $$('[data-i18n]').forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
     $$('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
 
-    $('#heroTitle').textContent = t('hero.title', { age: ordinal(ageInfo(new Date()).shown) });
+    $('#heroTitle').textContent = t('hero.title', { age: ageInfo(new Date()).shown + '.' });
     $('#heroImg').alt = t('hero.photoAlt');
-
-    var langBtn = $('#langBtn');
-    langBtn.textContent = t('ui.langShort');
-    langBtn.title = t('ui.switchLang');
-    langBtn.setAttribute('aria-label', t('ui.switchLang'));
-    langBtn.lang = lang === 'hu' ? 'en' : 'hu';
 
     updateSoundBtn();
     [['#lbClose', 'ui.close'], ['#lbPrev', 'ui.prev'], ['#lbNext', 'ui.next']].forEach(function (p) {
@@ -247,7 +230,6 @@
 
   function gateSteps() { return (CFG.gate && CFG.gate.steps) || []; }
   function isLastStep() { return gate.idx === gateSteps().length - 1; }
-  function text(v) { return v && typeof v === 'object' ? loc(v) : (v || ''); }
 
   // Original artwork for steps that have no album cover.
   var ART = {
@@ -264,7 +246,7 @@
   function renderGate(keepFeedback) {
     var steps = gateSteps(), s = steps[gate.idx];
     if (!s) return;
-    $('#gateLabel').textContent = loc(s.prompt);
+    $('#gateLabel').textContent = s.prompt;
     var clue = $('#gateClue');
     clue.textContent = s.clue || '';
     clue.hidden = !s.clue;
@@ -289,19 +271,19 @@
     var fb = gate.fb, s = gateSteps()[gate.idx];
     gateFeedback.classList.toggle('is-hint', !!fb && fb.kind === 'hint');
     if (!fb) { gateFeedback.textContent = ''; return; }
-    gateFeedback.textContent = fb.kind === 'hint' ? loc(s && s.hint) : t('gate.' + fb.kind, fb.vars);
+    gateFeedback.textContent = fb.kind === 'hint' ? ((s && s.hint) || '') : t('gate.' + fb.kind, fb.vars);
   }
 
   // After a right answer: show the record sleeve (cover, title, artist) before moving on.
   function renderReveal() {
     var s = gateSteps()[gate.idx], r = (s && s.reveal) || {};
-    var title = text(r.title), artist = text(r.artist);
+    var title = r.title || '', artist = r.artist || '';
     var sleeve = $('#gateSleeve');
     if (r.cover && r.cover.indexOf('art:') === 0) sleeve.innerHTML = ART[r.cover.slice(4)] || ART.record;
     else if (r.cover) {
       sleeve.innerHTML = '<img src="' + esc(r.cover) + '" width="256" height="256" alt="' + esc(t('gate.coverAlt', { title: title || artist })) + '">';
     } else sleeve.innerHTML = ART.record;
-    $('#revealNote').textContent = r.note ? loc(r.note) : t('gate.right');
+    $('#revealNote').textContent = r.note || t('gate.right');
     $('#revealTitle').textContent = title;
     $('#revealArtist').textContent = artist;
     $('#revealTitle').hidden = !title;
@@ -704,9 +686,9 @@
     shown.forEach(function (p, i) {
       var fig = document.createElement('figure');
       fig.className = 'shot';
-      fig.innerHTML = '<button class="shot__btn" type="button" aria-label="' + esc(t('gallery.open', { cap: loc(p.cap) })) + '">' +
-        '<img src="' + esc(p.src) + '" width="' + p.w + '" height="' + p.h + '" alt="' + esc(loc(p.alt)) + '" loading="lazy" decoding="async"></button>' +
-        '<figcaption>' + esc(loc(p.cap)) + '</figcaption>';
+      fig.innerHTML = '<button class="shot__btn" type="button" aria-label="' + esc(t('gallery.open', { cap: p.cap })) + '">' +
+        '<img src="' + esc(p.src) + '" width="' + p.w + '" height="' + p.h + '" alt="' + esc(p.alt) + '" loading="lazy" decoding="async"></button>' +
+        '<figcaption>' + esc(p.cap) + '</figcaption>';
       $('.shot__btn', fig).addEventListener('click', function () { openLightbox(i); });
       box.appendChild(fig);
     });
@@ -718,8 +700,8 @@
     lbIndex = (i + shown.length) % shown.length;
     var p = shown[lbIndex];
     var img = $('#lbImg');
-    img.src = p.src; img.alt = loc(p.alt);
-    $('#lbCap').textContent = loc(p.cap);
+    img.src = p.src; img.alt = p.alt;
+    $('#lbCap').textContent = p.cap;
     $('#lbCount').textContent = t('gallery.counter', { n: lbIndex + 1, t: shown.length });
     var nxt = shown[(lbIndex + 1) % shown.length]; if (nxt) new Image().src = nxt.src;
   }
@@ -732,20 +714,6 @@
     if (e.key === 'ArrowLeft') { e.preventDefault(); showLightbox(lbIndex - 1); }
     if (e.key === 'ArrowRight') { e.preventDefault(); showLightbox(lbIndex + 1); }
   });
-
-  /* ============================================================ PARTY */
-  function renderParty() {
-    var p = CFG.party || {}, box = $('#partyBody');
-    var rows = [['party.when', p.when], ['party.where', p.where], ['party.note', p.note]].filter(function (r) { return r[1]; });
-    if (!rows.length) { box.innerHTML = '<p class="party__secret">' + esc(t('party.secret')) + '</p>'; return; }
-    var html = '<dl class="party__list">' + rows.map(function (r) {
-      return '<div class="party__row"><dt>' + esc(t(r[0])) + '</dt><dd>' + esc(loc(r[1])) + '</dd></div>';
-    }).join('') + '</dl>';
-    if (p.mapUrl && /^https:\/\//.test(p.mapUrl)) {
-      html += '<p class="party__map"><a class="btn btn--ghost" href="' + esc(p.mapUrl) + '" target="_blank" rel="noopener">' + esc(t('party.map')) + '</a></p>';
-    }
-    box.innerHTML = html;
-  }
 
   /* ============================================================= WISH */
   var wishLit = true;
@@ -819,7 +787,7 @@
     applyStatic();
     renderGate();
     if (siteBooted) {
-      renderCards(); renderHunt(); renderSky(); renderFilters(); renderShots(); renderParty(); renderWish();
+      renderCards(); renderHunt(); renderSky(); renderFilters(); renderShots(); renderWish();
     }
   }
 
@@ -828,7 +796,7 @@
     siteBooted = true;
     buildHeroTrees();
     buildScene();
-    renderCards(); renderHunt(); renderSky(); renderFilters(); renderShots(); renderParty(); renderWish();
+    renderCards(); renderHunt(); renderSky(); renderFilters(); renderShots(); renderWish();
     initFireflies();
     setInterval(tickSky, 1000);
   }
@@ -836,11 +804,6 @@
   $('#gateCandle').innerHTML = candleSVG('g');
   $('#wishCandle').innerHTML = candleSVG('w');
 
-  $('#langBtn').addEventListener('click', function () {
-    lang = lang === 'hu' ? 'en' : 'hu';
-    store.set('flora-lang', lang);
-    renderAll();
-  });
   $('#soundBtn').addEventListener('click', function () {
     soundOn = !soundOn;
     store.set('flora-sound', soundOn ? 'on' : 'off');

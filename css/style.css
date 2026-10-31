@@ -184,7 +184,6 @@ button { cursor: pointer; }
   transition: border-color .2s, background-color .2s;
 }
 .iconbtn:hover { border-color: var(--flame); background: rgba(8, 14, 10, .9); }
-.iconbtn--text { font: 700 .95rem/1 var(--text); letter-spacing: .04em; }
 #soundBtn[aria-pressed="false"] .sound__waves,
 #soundBtn[aria-pressed="true"] .sound__mute { display: none; }
 
@@ -525,14 +524,6 @@ button { cursor: pointer; }
 .lb__nav { position: fixed; top: 50%; transform: translateY(-50%); }
 .lb__nav--prev { left: max(.5rem, env(safe-area-inset-left)); }
 .lb__nav--next { right: max(.5rem, env(safe-area-inset-right)); }
-
-/* --- Party ----------------------------------------------------------------- */
-.sec--party { background: var(--night); }
-.party__secret { margin: 1rem 0 0; padding-left: 1.25rem; border-left: 2px solid var(--amber); font: italic 400 clamp(1.45rem, 3vw, 1.9rem)/1.4 var(--display); }
-.party__list { margin: 1.25rem 0 0; display: grid; gap: 1.1rem; }
-.party__row dt { font: italic 1.15rem var(--display); color: var(--flame); }
-.party__row dd { margin: .1rem 0 0; font-size: 1.35rem; }
-.party__map { margin-top: 1.5rem; }
 
 /* --- Wish ------------------------------------------------------------------ */
 .sec--wish {
