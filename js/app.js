@@ -240,27 +240,47 @@
   }
 
   /* ================================================================ GATE */
-  var gate = { el: $('#gate'), idx: 0, tries: 0, busy: false, fb: null };
+  var gate = { el: $('#gate'), idx: 0, tries: 0, busy: false, fb: null, revealing: false };
   var gateForm = $('#gateForm'), gateInput = $('#gateInput'), gateFeedback = $('#gateFeedback');
-  var gateSubmit = $('#gateSubmit'), gateHint = $('#gateHint');
+  var gateSubmit = $('#gateSubmit'), gateHint = $('#gateHint'), gateReveal = $('#gateReveal');
+  var gateContinue = $('#gateContinue');
 
   function gateSteps() { return (CFG.gate && CFG.gate.steps) || []; }
+  function isLastStep() { return gate.idx === gateSteps().length - 1; }
+  function text(v) { return v && typeof v === 'object' ? loc(v) : (v || ''); }
+
+  // Original artwork for steps that have no album cover.
+  var ART = {
+    record: '<svg viewBox="0 0 160 160" aria-hidden="true" focusable="false"><defs><linearGradient id="artA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2e5240"/><stop offset="1" stop-color="#0d1812"/></linearGradient></defs>' +
+      '<rect width="160" height="160" fill="url(#artA)"/><g fill="none" stroke="#f4a93c" stroke-opacity=".35"><circle cx="80" cy="80" r="62"/><circle cx="80" cy="80" r="48"/><circle cx="80" cy="80" r="34"/></g>' +
+      '<g fill="#ffd88a"><ellipse cx="66" cy="104" rx="14" ry="10" transform="rotate(-20 66 104)"/><rect x="76" y="48" width="5" height="56"/><path d="M81 48c14 4 26 10 24 28-6-10-14-14-24-14z"/></g></svg>',
+    birthday: '<svg viewBox="0 0 160 160" aria-hidden="true" focusable="false"><defs><linearGradient id="artB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a3470"/><stop offset="1" stop-color="#0d1812"/></linearGradient>' +
+      '<radialGradient id="artG"><stop offset="0" stop-color="#ffd88a" stop-opacity=".7"/><stop offset="1" stop-color="#f4a93c" stop-opacity="0"/></radialGradient></defs>' +
+      '<rect width="160" height="160" fill="url(#artB)"/><circle cx="80" cy="52" r="48" fill="url(#artG)"/>' +
+      '<rect x="75" y="48" width="10" height="36" rx="2.500" fill="#eadfc8"/><path d="M80 18c9 12 13 20 0 32-13-12-9-20 0-32z" fill="#ffd88a"/><path d="M80 32c4 6 5 11 0 16-5-5-4-10 0-16z" fill="#fffaf0"/>' +
+      '<text x="80" y="140" text-anchor="middle" font-family="Almendra, Georgia, serif" font-weight="700" font-size="62" fill="#f4a93c">21</text></svg>'
+  };
 
   function renderGate(keepFeedback) {
     var steps = gateSteps(), s = steps[gate.idx];
     if (!s) return;
     $('#gateLabel').textContent = loc(s.prompt);
+    var clue = $('#gateClue');
+    clue.textContent = s.clue || '';
+    clue.hidden = !s.clue;
     gateInput.placeholder = t('gate.placeholder');
-    gateSubmit.textContent = gate.idx === steps.length - 1 ? t('gate.light') : t('gate.next');
+    gateSubmit.textContent = t('gate.check');
     gateHint.hidden = !(s.hint && gate.tries > 0);
 
     var dots = $('#gateDots');
     dots.hidden = steps.length < 2;
     dots.setAttribute('aria-label', t('gate.progress', { n: gate.idx + 1, t: steps.length }));
     dots.innerHTML = steps.map(function (_, i) {
-      return '<li class="' + (i < gate.idx ? 'is-done' : i === gate.idx ? 'is-current' : '') + '"></li>';
+      var done = i < gate.idx || (gate.revealing && i === gate.idx);
+      return '<li class="' + (done ? 'is-done' : i === gate.idx ? 'is-current' : '') + '"></li>';
     }).join('');
 
+    if (gate.revealing) renderReveal();
     if (keepFeedback !== false) renderFeedback();
   }
 
@@ -272,19 +292,56 @@
     gateFeedback.textContent = fb.kind === 'hint' ? loc(s && s.hint) : t('gate.' + fb.kind, fb.vars);
   }
 
+  // After a right answer: show the record sleeve (cover, title, artist) before moving on.
+  function renderReveal() {
+    var s = gateSteps()[gate.idx], r = (s && s.reveal) || {};
+    var title = text(r.title), artist = text(r.artist);
+    var sleeve = $('#gateSleeve');
+    if (r.cover && r.cover.indexOf('art:') === 0) sleeve.innerHTML = ART[r.cover.slice(4)] || ART.record;
+    else if (r.cover) {
+      sleeve.innerHTML = '<img src="' + esc(r.cover) + '" width="256" height="256" alt="' + esc(t('gate.coverAlt', { title: title || artist })) + '">';
+    } else sleeve.innerHTML = ART.record;
+    $('#revealNote').textContent = r.note ? loc(r.note) : t('gate.right');
+    $('#revealTitle').textContent = title;
+    $('#revealArtist').textContent = artist;
+    $('#revealTitle').hidden = !title;
+    $('#revealArtist').hidden = !artist;
+    gateContinue.textContent = isLastStep() ? t('gate.light') : t('gate.next');
+  }
+
+  function showReveal() {
+    gate.revealing = true;
+    gate.el.classList.add('is-revealing');
+    gateForm.hidden = true;
+    gateReveal.hidden = false;
+    gateReveal.classList.remove('is-open');
+    renderGate(false);
+    blip(Math.min(gate.idx, 3));
+    requestAnimationFrame(function () { requestAnimationFrame(function () { gateReveal.classList.add('is-open'); }); });
+    gateContinue.focus({ preventScroll: true });
+  }
+
+  gateContinue.addEventListener('click', function () {
+    if (gate.busy) return;
+    if (isLastStep()) { unlock(true); return; }
+    gate.idx++; gate.tries = 0; gate.revealing = false; gate.fb = null;
+    gate.el.classList.remove('is-revealing');
+    gateReveal.hidden = true; gateReveal.classList.remove('is-open');
+    gateForm.hidden = false;
+    gateInput.value = '';
+    renderGate();
+    gateInput.focus();
+  });
+
   gateForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    if (gate.busy) return;
-    var steps = gateSteps(), s = steps[gate.idx], val = gateInput.value;
+    if (gate.busy || gate.revealing) return;
+    var s = gateSteps()[gate.idx], val = gateInput.value;
     if (!val.trim()) { setFeedback('empty'); gateInput.focus(); return; }
     var res = Gate.check(val, s.answer);
     if (res.exact) {
-      gate.idx++; gate.tries = 0;
-      if (gate.idx >= steps.length) { unlock(true); return; }
-      gateInput.value = '';
-      setFeedback('ok');
-      renderGate();
-      gateInput.focus();
+      gate.fb = null; renderFeedback();
+      showReveal();
     } else {
       gate.tries++;
       setFeedback('wrong', { m: res.matched, t: res.total });
@@ -327,6 +384,7 @@
 
     if (!animate) { reveal(); return; }
     $('#gateTitle').textContent = t('gate.lit');
+    gate.el.classList.remove('is-revealing');
     gate.el.classList.add('is-lit');
     gateInput.blur();
     chime();

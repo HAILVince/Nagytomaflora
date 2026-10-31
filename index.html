@@ -115,13 +115,25 @@
 
       <form class="gate__form" id="gateForm" novalidate>
         <label class="gate__label" for="gateInput" id="gateLabel"></label>
-        <textarea class="gate__input" id="gateInput" rows="2" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-describedby="gateFeedback"></textarea>
+        <p class="gate__clue" id="gateClue"></p>
+        <textarea class="gate__input" id="gateInput" rows="2" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-describedby="gateClue gateFeedback"></textarea>
         <p class="gate__feedback" id="gateFeedback" role="status" aria-live="polite"></p>
         <div class="gate__actions">
           <button class="btn btn--flame" id="gateSubmit" type="submit"></button>
           <button class="btn btn--ghost" id="gateHint" type="button" hidden data-i18n="gate.hintBtn"></button>
         </div>
       </form>
+
+      <div class="gate__reveal" id="gateReveal" hidden>
+        <div class="cover" aria-hidden="false">
+          <div class="cover__disc" aria-hidden="true"><div class="cover__vinyl"></div></div>
+          <div class="cover__sleeve" id="gateSleeve"></div>
+        </div>
+        <p class="reveal__note" id="revealNote" role="status"></p>
+        <p class="reveal__title" id="revealTitle"></p>
+        <p class="reveal__artist" id="revealArtist"></p>
+        <button class="btn btn--flame" id="gateContinue" type="button"></button>
+      </div>
     </div>
   </section>
 

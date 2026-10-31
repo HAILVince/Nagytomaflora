@@ -290,6 +290,12 @@ button { cursor: pointer; }
 .gate__lede { margin: 0; max-width: 44ch; color: var(--bone-dim); font-size: 1.15rem; }
 .gate__form { width: 100%; margin-top: 1.5rem; transition: opacity .6s ease; }
 .gate__label { display: block; margin: 0 0 .5rem; text-align: left; font: italic 1.15rem/1.35 var(--text); color: var(--bone); }
+.gate__clue {
+  margin: 0 0 .75rem; padding: .35rem 0 .35rem 1rem; text-align: left;
+  border-left: 2px solid var(--amber);
+  font: italic 400 clamp(1.3rem, 4.4vw, 1.6rem)/1.4 var(--display); color: var(--flame);
+  text-wrap: balance;
+}
 .gate__input {
   display: block; width: 100%; min-height: 4.5rem; resize: none;
   padding: .85rem 1rem;
@@ -311,6 +317,35 @@ button { cursor: pointer; }
   60% { transform: translateX(-5px); } 80% { transform: translateX(3px); }
 }
 .gate.is-lit .gate__form, .gate.is-lit .gate__lede, .gate.is-lit .gate__dots { opacity: 0; pointer-events: none; transition: opacity .6s ease; }
+
+/* Record sleeve shown after each right answer */
+.gate__reveal { width: 100%; display: flex; flex-direction: column; align-items: center; margin-top: 1.5rem; }
+.cover { position: relative; width: 168px; height: 168px; margin-bottom: 1.5rem; }
+.cover__sleeve {
+  position: absolute; inset: 0; z-index: 2; overflow: hidden; border-radius: 10px; background: var(--moss);
+  box-shadow: 0 18px 36px -12px rgba(0, 0, 0, .9), 0 0 0 1px rgba(234, 223, 200, .14);
+}
+.cover__sleeve img, .cover__sleeve svg { display: block; width: 100%; height: 100%; object-fit: cover; }
+.cover__disc { position: absolute; inset: 6px; z-index: 1; transition: transform 1.2s cubic-bezier(.2, .8, .2, 1) .35s; }
+.gate__reveal.is-open .cover__disc { transform: translateX(62%); }
+.cover__vinyl {
+  width: 100%; height: 100%; border-radius: 50%;
+  background:
+    radial-gradient(circle, #f4a93c 0 13%, #0b0b0b 14% 17%, transparent 18%),
+    conic-gradient(from 20deg, transparent 0 18%, rgba(255, 255, 255, .13) 25%, transparent 32% 68%, rgba(255, 255, 255, .13) 75%, transparent 82%),
+    repeating-radial-gradient(circle, #121212 0 2px, #2a2a2a 2px 3px);
+  box-shadow: inset 0 0 0 2px #3a3a3a, 0 8px 20px -8px rgba(0, 0, 0, .9);
+  animation: spin 5s linear infinite paused;
+}
+.gate__reveal.is-open .cover__vinyl { animation-play-state: running; animation-delay: 1.4s; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.reveal__note { margin: 0; font: italic 400 1.6rem/1.2 var(--display); color: var(--flame); }
+.reveal__title { margin: .4rem 0 0; font: 700 clamp(1.9rem, 6vw, 2.4rem)/1.1 var(--display); }
+.reveal__artist { margin: .2rem 0 1.5rem; color: var(--bone-dim); font-size: 1.2rem; }
+/* While a cover is showing, give it the room: hide the intro text */
+.gate.is-revealing .gate__title, .gate.is-revealing .gate__lede { display: none; }
+.gate.is-revealing .gate__candle { width: clamp(80px, 14vh, 120px); }
+.gate.is-lit .gate__reveal { opacity: 0; pointer-events: none; transition: opacity .6s ease; }
 
 /* The light spreads from the flame and uncovers the site */
 .gate.is-opening {

@@ -3,7 +3,8 @@
 A candlelit birthday surprise for Nagy-Toma Flóra (born 28 October 2005).
 Plain HTML, CSS and JavaScript. No build step, no dependencies.
 
-She has to write the lyrics of a song to light the candle and get in. After that:
+She has to continue five song lines to light the candle and get in, and every right
+answer reveals the album cover. After that:
 a tarot-style spread of the things she loves, a mushroom hunt, her moon on the day
 she was born, a photo gallery, the party details and a candle to blow out.
 Hungarian by default, with an EN/HU switch in the corner.
@@ -24,21 +25,33 @@ itself is public. For a real lock, add Cloudflare Access in front of it.
 
 ## Things you will edit (all in `js/config.js`)
 
-### 1. The song lyrics (the gate)
+### 1. The song gate
 
-The lyrics are never stored in the repo, only a hash of each word, so viewing the
-page source does not give them away. Case, accents and punctuation are ignored when
-she types, so `ő` / `o` and `Hogy vagy?` / `hogy vagy` all count as the same.
+There are five steps. For each one she sees a line (the `clue`) and has to type the
+next line or finish it. After every right answer a record sleeve slides out with the
+album cover, title and artist, and she presses "Tovább" to continue. After the last
+one the candle lights.
+
+The answers are never stored in plain text, only as hashes, so viewing the page
+source does not give them away. Typing is very forgiving: capital letters, accents
+(`ő` / `o`), punctuation, extra or missing spaces, swapped or missing letters, a wrong
+letter or two, even one forgotten word are all fine.
+
+To change an answer:
 
 ```bash
-node tools/make-gate.cjs "first part of the lyrics" "second part of the lyrics"
+node tools/make-gate.cjs "the answer for step 1" "the answer for step 2"
 ```
 
-Each quoted text becomes one step she has to get through. Paste each printed
-`answer: [...]` into the matching step in `gate.steps`, and write the step's `prompt`
-(what she sees above the box) and an optional `hint` in Hungarian and English.
+Paste each printed `answer: {...}` into the matching step in `gate.steps`. To check
+how forgiving it is for a given answer:
 
-The gate currently ships with a **test step**: type `lángolj, gyertya, lángolj`.
+```bash
+node tools/make-gate.cjs --try "the real answer" "what she might type"
+```
+
+Covers live in `assets/covers/`. For a step without a cover use `cover: 'art:record'`
+(a music note) or `cover: 'art:birthday'` (a candle and a 21), both drawn in code.
 
 ### 2. The party details
 
@@ -67,9 +80,9 @@ link at the bottom of the page.
 ```
 index.html        page structure and shared SVG art
 css/style.css     all styling (fonts are self-hosted from assets/fonts)
-js/config.js      lyrics hashes, party details, photo list
+js/config.js      gate steps, party details, photo list
 js/i18n.js        every visible text, Hungarian and English
-js/gate-core.js   word normalising and hashing for the gate
+js/gate-core.js   forgiving answer matching (hashes only) for the gate
 js/app.js         behaviour
 tools/make-gate.cjs  turns lyrics into hashes
 ```
