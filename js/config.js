@@ -43,9 +43,9 @@ window.FLORA_CONFIG = {
       {
         prompt: 'Fejezd be a sort:',
         clue: 'az úgy volt hogy mindig is...',
-        hint: 'Négy szó.',
+        hint: 'Az előadó: Elefánt.',
         answer: {"w":["1p0w18h,1ty67o4,1e068x3,16sz5u4,127k2lj,xehpjp,1strmxn,12umyrq,138ur50,lw6at9,1er6dbv,li5gwg,oclwbk,15wth3o,1klr4on,1mwnnes,1mr6gc4,1iu5aie,7zc5v9,ugbmdd,iefkvg,1hw119i,1nk73le,pb5d4s,7fw1q,1xeghfn,1snqmuk,1dcbqvm,vg7q3f","190jpbl,x15fzi,qphujf,2rw5wy,z6m555","boqctj,1hvnkbc,max3p,sxujjv,g07rao","1sho0v2,1gpqnf8,3pbvi9,1ar3myj,qj5xv5"],"l":"1g5hlor,1ojerxx,gc312m,1ckml8m,16yiacq,lr85em,o3222h,ag1e02,4npun9,1k99j9q,1i1zql7,erzehw,1v0yq69,hfvzxw,czle05,1p4ji8r,hv1lig,wurwyd,sljnpv,1h5ia2v"},
-        reveal: { cover: 'art:record', note: 'Ezt is tudtad!' }
+        reveal: { cover: 'art:record', title: 'Sokáig vártalak', artist: 'Elefánt', note: 'Ezt is tudtad!' }
       },
       {
         prompt: 'Fejezd be a verset:',
