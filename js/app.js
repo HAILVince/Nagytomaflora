@@ -341,6 +341,7 @@
   function unlock(animate) {
     var site = $('#site');
     gate.busy = true;
+    $('#skipBtn').hidden = true;
 
     function finish() {
       gate.el.hidden = true;
@@ -372,6 +373,11 @@
     chime();
     setTimeout(reveal, reduceMotion ? 150 : 1700);
   }
+
+  // For showing the site to other people: skip all the questions.
+  $('#skipBtn').addEventListener('click', function () {
+    if (!gate.busy) unlock(true);
+  });
 
   $('#relock').addEventListener('click', function () {
     store.del('flora-unlocked');

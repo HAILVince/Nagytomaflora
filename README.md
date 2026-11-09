@@ -37,6 +37,10 @@ source does not give them away. Typing is very forgiving: capital letters, accen
 (`ő` / `o`), punctuation, extra or missing spaces, swapped or missing letters, a wrong
 letter or two, even one forgotten word are all fine.
 
+A "Kihagyom a kérdéseket" button in the top-right corner of the gate skips all five
+steps (the candle still lights), so she can show the site to other people without
+answering anything. It disappears once the site is open.
+
 To change an answer:
 
 ```bash

@@ -17,6 +17,7 @@ window.FLORA_I18N = {
     lede: 'Ez az erdő csak annak nyílik meg, aki ismeri a dalokat. Folytasd a sorokat, és a gyertya magától meggyullad.',
     placeholder: 'Írd ide, ahogy a dalban hallod',
     check: 'Elküldöm',
+    skip: 'Kihagyom a kérdéseket',
     next: 'Tovább',
     light: 'Gyújtsd meg a gyertyát',
     right: 'Eltaláltad!',

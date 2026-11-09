@@ -92,8 +92,12 @@
     </defs>
   </svg>
 
-  <!-- Sound control (always reachable) -->
+  <!-- Corner controls: skip the questions (gate only) and sound -->
   <div class="toolbar" role="group" aria-label="Beállítások">
+    <button class="skipbtn" id="skipBtn" type="button">
+      <span data-i18n="gate.skip"></span>
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6l6 6-6 6M12 6l6 6-6 6"/></svg>
+    </button>
     <button class="iconbtn" id="soundBtn" type="button" aria-pressed="true" title="Hang bekapcsolva" aria-label="Hang bekapcsolva">
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M4 9.5v5h4l5 4v-13l-5 4z"/>

@@ -184,6 +184,16 @@ button { cursor: pointer; }
   transition: border-color .2s, background-color .2s;
 }
 .iconbtn:hover { border-color: var(--flame); background: rgba(8, 14, 10, .9); }
+.skipbtn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  min-height: 44px; padding: 0 1rem;
+  border: 1px solid rgba(234, 223, 200, .28); border-radius: var(--r-sm);
+  background: rgba(8, 14, 10, .72); color: var(--bone);
+  backdrop-filter: blur(6px);
+  font: 600 .98rem/1 var(--text);
+  transition: border-color .2s, background-color .2s;
+}
+.skipbtn:hover { border-color: var(--flame); background: rgba(8, 14, 10, .9); }
 #soundBtn[aria-pressed="false"] .sound__waves,
 #soundBtn[aria-pressed="true"] .sound__mute { display: none; }
 
